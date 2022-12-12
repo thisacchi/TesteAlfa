@@ -1,0 +1,13 @@
+﻿div#spinner {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    text-align: center;
+    z-index: 50000;
+    overflow: auto;
+    opacity: 0.9;
+    background: url('../Images/gifCarregamento.gif') no-repeat center #fff;
+}

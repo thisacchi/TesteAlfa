@@ -1,0 +1,61 @@
+﻿@using RDStation.Models;
+@model RdStationResponse
+
+
+
+@if (Model != null && Model.Sucesso && Model.Organizacoes.Count > 0)
+{
+    <div class="row mt-3">
+        <div class="col-12 text-right">
+            <button type="button" class="btn btn-success" onclick="appCompany.exportarExcel('@Url.Action("ExportarParaExcel", "Home")')">
+                <i class="fas fa-file-excel"></i> Exportar Para Excel
+            </button>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-10">
+            <table class="table table-bordered table-hover">
+                <thead class="table-success text-center">
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Link</th>
+                        <th>Resumo</th>
+                        <th>Data Criação</th>
+                        <th>Data Atualização</th>
+                        <th>Segmentos | Contatos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Organizacao organizacao in Model.Organizacoes)
+                    {
+                        <tr>
+                            <td>@organizacao.Nome</td>
+                            <td>@organizacao.Url</td>
+                            <td>@organizacao.Resumo</td>
+                            <td>@organizacao.DataCriacao.ToShortDateString()</td>
+                            <td>@organizacao.DataAtualizacao.ToShortDateString()</td>
+                            <td>
+                                <button type="button" class="btn btn-warning" title="Verificar Segmentos" onclick="appCompany.mostrarDados('@Url.Action("MostrarSegmentos", "Home", new { id = organizacao.Id })')">
+                                    <i class="fas fa-building"></i>
+                                </button>
+                                <button type="button" class="btn btn-info" title="Contatos" onclick="appCompany.mostrarDados('@Url.Action("MostrarContatos", "Home", new { id = organizacao.Id })')">
+                                    <i class="fas fa-id-card"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+}
+else
+{
+    <div class="row mt-2">
+        <div class="alert alert-danger">
+            <p>@Html.Raw(Model == null ? "Não foi possível capturar os dados das empresas" : Model.MensagemErro)</p>
+        </div>
+    </div>
+}
+
